@@ -121,9 +121,9 @@
   and import the NAsyncLoader.framework to Embedded Binaries
 
 
-  <p><img src="/add" alt="Add NAsync to Project" title="title" /></p>
+  <p><img src="/add.png" alt="Add NAsync to Project" title="title" /></p>
   
-  <p><img src="/import" alt="Import NAsyncLoader.framework" title="title" /></p>
+  <p><img src="/import.png" alt="Import NAsyncLoader.framework" title="title" /></p>
   
   
   
