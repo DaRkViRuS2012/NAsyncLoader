@@ -16,6 +16,8 @@
 
   ```
     extension UIImage: NAsyncDataType {}
+    extension XMLParser: NAsyncDataType {}
+    extension PDFDocument : NAsyncDataType {}
   ```
 
   To represent JSON resources the types `JSONObject<Type:BaseModel>` and `JSONArray<Type:BaseModel>`
@@ -127,3 +129,54 @@
   
   
   
+## About the pintrest Example
+  this example shows how to use the library in collection view load 
+  it use the library to load json and images and cahce it
+  
+  it use Pull to refresh
+  size classes for fonts and constraints
+  animation for showing the new cells on screen
+  
+  you can user paginate to load more data every time 
+  
+ ```
+   // page size and index
+    private var currentPage = 1
+    private var pageSize = 10
+ 
+ 
+     func fetchData(){
+        let jsonLoader = NAsyncURLLoader<JSONArray<Response> > ()
+        // use this url to test paginating
+        let url = "https://picsum.photos/v2/list?page=\(currentPage)&limit=\(pageSize)"
+        jsonLoader.requestResource(from: URL(string:url)!) { (result, _) in
+            switch result{
+            case .success(let response):
+                self.items.append(contentsOf: response.value)
+                self.itemsCount = self.items.count
+                self.collectionView.reloadData()
+                break
+            case .empty:
+                break
+            case .error(let error):
+                print("1 \(error)")
+                break
+            }
+        }
+        
+    }
+    
+    func getNextPage(){
+        // increse the page index and fetch the new data
+        currentPage += 1
+        fetchData()
+    }
+ 
+ // collectionview Delegate to triger the getNextPage() when reach the end of the list
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == itemsCount - 1{
+            getNextPage()
+        }
+    }
+ 
+ ```
